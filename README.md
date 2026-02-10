@@ -38,8 +38,9 @@ cp camel-core/*.md ~/.bob/commands/
 
 | Command | Description |
 |---------|-------------|
-| `/camel-fix-sonarcloud <rule>` | Fix SonarCloud issues for any rule |
+| `/camel-core-find-task` | Find an issue to contribute based on experience |
 | `/camel-core-fix-jira-issue <issue>` | Fix a Jira issue from ASF tracker |
+| `/camel-fix-sonarcloud <rule>` | Fix SonarCloud issues for any rule |
 
 ## Usage Examples
 
@@ -58,6 +59,19 @@ cp camel-core/*.md ~/.bob/commands/
 # Limit number of issues to process
 /camel-fix-sonarcloud S6126 limit=10
 ```
+
+### Find a Task to Contribute
+
+```bash
+# Interactive - asks about your experience level
+/camel-core-find-task
+```
+
+The command will:
+1. Ask about your experience level
+2. Search for appropriate issues (good-first-issue, easy, help-wanted)
+3. Present a list of options
+4. Guide you to use `/camel-core-fix-jira-issue` to implement
 
 ### Fix Jira Issues
 
@@ -90,8 +104,9 @@ ai-agents-oss-helper/
 ├── install.sh              # Installation script
 ├── README.md
 └── camel-core/             # Apache Camel commands
-    ├── camel-fix-sonarcloud.md
-    └── camel-core-fix-jira-issue.md
+    ├── camel-core-find-task.md
+    ├── camel-core-fix-jira-issue.md
+    └── camel-fix-sonarcloud.md
 ```
 
 ## Contributing
