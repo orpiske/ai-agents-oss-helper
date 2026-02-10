@@ -7,14 +7,14 @@ Custom commands for AI coding agents (Claude, Bob) to help contribute to open so
 ### Quick Install (Both Agents)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_ORG/ai-agents-oss-helper/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/orpiske/ai-agents-oss-helper/main/install.sh | bash
 ```
 
 ### Selective Install
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_ORG/ai-agents-oss-helper.git
+git clone https://github.com/orpiske/ai-agents-oss-helper.git
 cd ai-agents-oss-helper
 
 # Install for specific agent
@@ -82,6 +82,18 @@ ai-agents-oss-helper/
     └── camel-fix-sonarcloud.md
 ```
 
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add or modify commands
+4. Update `install.sh` if adding new files
+5. Submit a pull request
+
 ## License
 
 Apache License 2.0
+
+---
+
+[GitHub Repository](https://github.com/orpiske/ai-agents-oss-helper)
