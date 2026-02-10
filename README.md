@@ -46,6 +46,7 @@ cp camel-core/*.md ~/.bob/commands/
 
 | Command | Description |
 |---------|-------------|
+| `/wanaku-find-task` | Find an issue to contribute based on experience |
 | `/wanaku-fix-issue <issue>` | Fix a GitHub issue from Wanaku repository |
 
 ## Usage Examples
@@ -65,6 +66,19 @@ cp camel-core/*.md ~/.bob/commands/
 # Limit number of issues to process
 /camel-fix-sonarcloud S6126 limit=10
 ```
+
+### Find a Wanaku Task
+
+```bash
+# Interactive - asks about your experience level
+/wanaku-find-task
+```
+
+The command will:
+1. Ask about your experience level
+2. Search for issues (good first issue or help wanted)
+3. Present a list of options
+4. Guide you to use `/wanaku-fix-issue` to implement
 
 ### Fix Wanaku Issues
 
@@ -124,6 +138,7 @@ ai-agents-oss-helper/
 │   ├── camel-core-fix-jira-issue.md
 │   └── camel-fix-sonarcloud.md
 └── wanaku/                 # Wanaku commands
+    ├── wanaku-find-task.md
     └── wanaku-fix-issue.md
 ```
 
