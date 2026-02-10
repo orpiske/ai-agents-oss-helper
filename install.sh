@@ -27,6 +27,9 @@ COMMAND_FILES=(
     "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-create-issue.md"
     "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-find-task.md"
     "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-fix-issue.md"
+    "camel-integration-capability/camel-integration-capability-create-issue.md"
+    "camel-integration-capability/camel-integration-capability-find-task.md"
+    "camel-integration-capability/camel-integration-capability-fix-issue.md"
 )
 
 # Colors for output

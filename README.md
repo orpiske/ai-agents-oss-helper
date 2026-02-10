@@ -64,6 +64,14 @@ cp camel-core/*.md ~/.bob/commands/
 | `/wanaku-capabilities-java-sdk-find-task` | Find an issue to contribute based on experience |
 | `/wanaku-capabilities-java-sdk-fix-issue <issue>` | Fix a GitHub issue from the SDK repository |
 
+### Camel Integration Capability
+
+| Command | Description |
+|---------|-------------|
+| `/camel-integration-capability-create-issue <title>` | Create a new issue in the repository |
+| `/camel-integration-capability-find-task` | Find an issue to contribute based on experience |
+| `/camel-integration-capability-fix-issue <issue>` | Fix a GitHub issue from the repository |
+
 ## Usage Examples
 
 ### Fix SonarCloud Issues (Camel)
@@ -183,10 +191,14 @@ ai-agents-oss-helper/
 │   ├── wanaku-create-issue.md
 │   ├── wanaku-find-task.md
 │   └── wanaku-fix-issue.md
-└── wanaku-capabilities-java-sdk/  # Wanaku Capabilities Java SDK commands
-    ├── wanaku-capabilities-java-sdk-create-issue.md
-    ├── wanaku-capabilities-java-sdk-find-task.md
-    └── wanaku-capabilities-java-sdk-fix-issue.md
+├── wanaku-capabilities-java-sdk/  # Wanaku Capabilities Java SDK commands
+│   ├── wanaku-capabilities-java-sdk-create-issue.md
+│   ├── wanaku-capabilities-java-sdk-find-task.md
+│   └── wanaku-capabilities-java-sdk-fix-issue.md
+└── camel-integration-capability/  # Camel Integration Capability commands
+    ├── camel-integration-capability-create-issue.md
+    ├── camel-integration-capability-find-task.md
+    └── camel-integration-capability-fix-issue.md
 ```
 
 ## Contributing
