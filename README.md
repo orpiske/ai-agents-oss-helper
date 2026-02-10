@@ -39,6 +39,7 @@ cp camel-core/*.md ~/.bob/commands/
 | Command | Description |
 |---------|-------------|
 | `/camel-fix-sonarcloud <rule>` | Fix SonarCloud issues for any rule |
+| `/camel-core-fix-jira-issue <issue>` | Fix a Jira issue from ASF tracker |
 
 ## Usage Examples
 
@@ -56,6 +57,16 @@ cp camel-core/*.md ~/.bob/commands/
 
 # Limit number of issues to process
 /camel-fix-sonarcloud S6126 limit=10
+```
+
+### Fix Jira Issues
+
+```bash
+# Using issue ID
+/camel-core-fix-jira-issue CAMEL-20410
+
+# Using full URL
+/camel-core-fix-jira-issue https://issues.apache.org/jira/browse/CAMEL-22326
 ```
 
 ## Command Structure
@@ -79,7 +90,8 @@ ai-agents-oss-helper/
 ├── install.sh              # Installation script
 ├── README.md
 └── camel-core/             # Apache Camel commands
-    └── camel-fix-sonarcloud.md
+    ├── camel-fix-sonarcloud.md
+    └── camel-core-fix-jira-issue.md
 ```
 
 ## Contributing

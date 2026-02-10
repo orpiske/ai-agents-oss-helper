@@ -18,6 +18,7 @@ AGENTS=("claude" "bob")
 # Command files to install (relative paths from repo root)
 COMMAND_FILES=(
     "camel-core/camel-fix-sonarcloud.md"
+    "camel-core/camel-core-fix-jira-issue.md"
 )
 
 # Colors for output
