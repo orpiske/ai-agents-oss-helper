@@ -1,0 +1,87 @@
+# AI Agents OSS Helper
+
+Custom commands for AI coding agents (Claude, Bob) to help contribute to open source projects.
+
+## Installation
+
+### Quick Install (Both Agents)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/YOUR_ORG/ai-agents-oss-helper/main/install.sh | bash
+```
+
+### Selective Install
+
+```bash
+# Clone the repository
+git clone https://github.com/YOUR_ORG/ai-agents-oss-helper.git
+cd ai-agents-oss-helper
+
+# Install for specific agent
+./install.sh claude    # Claude only
+./install.sh bob       # Bob only
+./install.sh           # Both
+```
+
+### Manual Install
+
+Copy command files to your agent's commands directory:
+
+```bash
+cp camel-core/*.md ~/.claude/commands/
+cp camel-core/*.md ~/.bob/commands/
+```
+
+## Available Commands
+
+### Apache Camel
+
+| Command | Description |
+|---------|-------------|
+| `/camel-fix-sonarcloud <rule>` | Fix SonarCloud issues for any rule |
+
+## Usage Examples
+
+### Fix SonarCloud Issues
+
+```bash
+# Fix cognitive complexity issues
+/camel-fix-sonarcloud S3776
+
+# Fix pattern matching for instanceof
+/camel-fix-sonarcloud S6201
+
+# Fix issues in a specific module only
+/camel-fix-sonarcloud S3457 module=components/camel-jms
+
+# Limit number of issues to process
+/camel-fix-sonarcloud S6126 limit=10
+```
+
+## Command Structure
+
+Commands are Markdown files with:
+- **Usage** section describing arguments and options
+- **Instructions** for the agent to follow
+- **Constraints** to ensure safe modifications
+- **Workflow** for branching, testing, and committing
+
+## Adding New Commands
+
+1. Create a `.md` file in the appropriate directory (e.g., `camel-core/`)
+2. Follow the existing command structure
+3. Add the file path to `COMMAND_FILES` array in `install.sh`
+
+## Project Structure
+
+```
+ai-agents-oss-helper/
+├── install.sh              # Installation script
+├── README.md
+└── camel-core/             # Apache Camel commands
+    └── camel-fix-sonarcloud.md
+```
+
+## License
+
+Apache License 2.0
