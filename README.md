@@ -52,6 +52,7 @@ cp camel-core/*.md ~/.bob/commands/
 
 | Command | Description |
 |---------|-------------|
+| `/wanaku-create-issue <title>` | Create a new issue in the Wanaku repository |
 | `/wanaku-find-task` | Find an issue to contribute based on experience |
 | `/wanaku-fix-issue <issue>` | Fix a GitHub issue from Wanaku repository |
 
@@ -72,6 +73,22 @@ cp camel-core/*.md ~/.bob/commands/
 # Limit number of issues to process
 /camel-fix-sonarcloud S6126 limit=10
 ```
+
+### Create a Wanaku Issue
+
+```bash
+# Interactive - will prompt for details
+/wanaku-create-issue
+
+# With title provided
+/wanaku-create-issue "Add support for custom headers in HTTP requests"
+```
+
+The command will:
+1. Gather issue details (type, description, etc.)
+2. Suggest appropriate labels
+3. Show preview and ask for confirmation
+4. Create the issue and return the URL
 
 ### Find a Wanaku Task
 
