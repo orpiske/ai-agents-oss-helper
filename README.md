@@ -52,6 +52,7 @@ cp camel-core/*.md ~/.bob/commands/
 
 | Command | Description |
 |---------|-------------|
+| `/wanaku-analyze-issue <issue>` | Analyze an issue to understand the problem and investigate the codebase |
 | `/wanaku-create-issue <title>` | Create a new issue in the Wanaku repository |
 | `/wanaku-find-task` | Find an issue to contribute based on experience |
 | `/wanaku-fix-issue <issue>` | Fix a GitHub issue from Wanaku repository |
@@ -89,6 +90,23 @@ cp camel-core/*.md ~/.bob/commands/
 # Limit number of issues to process
 /camel-fix-sonarcloud S6126 limit=10
 ```
+
+### Analyze a Wanaku Issue
+
+```bash
+# Using issue number
+/wanaku-analyze-issue 42
+
+# Using full URL
+/wanaku-analyze-issue https://github.com/wanaku-ai/wanaku/issues/42
+```
+
+The command will:
+1. Fetch the issue details and comments
+2. Investigate the Wanaku codebase for relevant code
+3. Check related repos (Capabilities SDK, Camel Integration) if relevant
+4. Provide a structured analysis report
+5. Suggest next steps (fix, ask for more info, etc.)
 
 ### Create a Wanaku Issue
 
@@ -188,6 +206,7 @@ ai-agents-oss-helper/
 │   ├── camel-core-fix-jira-issue.md
 │   └── camel-fix-sonarcloud.md
 ├── wanaku/                 # Wanaku commands
+│   ├── wanaku-analyze-issue.md
 │   ├── wanaku-create-issue.md
 │   ├── wanaku-find-task.md
 │   └── wanaku-fix-issue.md

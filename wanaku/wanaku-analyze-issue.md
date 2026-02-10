@@ -1,0 +1,151 @@
+# Analyze Wanaku Issue
+
+Analyze a GitHub issue from the Wanaku project to gain deeper understanding of the problem, especially when the issue lacks details or requires codebase investigation.
+
+## Usage
+
+```
+/wanaku-analyze-issue <issue>
+```
+
+**Arguments:**
+- `<issue>` - GitHub issue number (e.g., `42`) or full URL (e.g., `https://github.com/wanaku-ai/wanaku/issues/42`)
+
+## Instructions
+
+### 1. Parse Input
+
+Extract the issue number from the argument:
+- If full URL: extract number from path
+- If number only: use as-is
+
+### 2. Retrieve Issue Details
+
+Fetch issue information using GitHub CLI:
+
+```bash
+gh issue view <ISSUE_NUMBER> --repo wanaku-ai/wanaku --json number,title,body,state,labels,comments
+```
+
+Also fetch comments for additional context:
+
+```bash
+gh issue view <ISSUE_NUMBER> --repo wanaku-ai/wanaku --comments
+```
+
+### 3. Analyze Issue Content
+
+From the retrieved information, identify:
+
+1. **Problem Statement** - What is the user reporting?
+2. **Symptoms** - What behavior is observed?
+3. **Expected Behavior** - What should happen instead?
+4. **Missing Information** - What details are lacking?
+5. **Keywords** - Error messages, component names, feature names
+
+### 4. Investigate the Codebase
+
+Based on keywords and context from the issue:
+
+#### Primary Repository (Wanaku)
+Search the main Wanaku codebase for relevant code:
+- Error messages mentioned in the issue
+- Component or feature names
+- Related functionality
+
+#### Related Repositories
+
+When the issue might involve related projects, also investigate:
+
+**Wanaku Capabilities Java SDK** (`wanaku-ai/wanaku-capabilities-java-sdk`):
+- If the issue relates to capabilities, providers, or SDK functionality
+- Clone or fetch if needed:
+  ```bash
+  gh repo clone wanaku-ai/wanaku-capabilities-java-sdk /tmp/wanaku-capabilities-java-sdk
+  ```
+
+**Camel Integration Capability** (`wanaku-ai/camel-integration-capability`):
+- If the issue relates to Camel components or integrations
+- Clone or fetch if needed:
+  ```bash
+  gh repo clone wanaku-ai/camel-integration-capability /tmp/camel-integration-capability
+  ```
+
+### 5. Build Understanding
+
+Synthesize findings into:
+
+1. **Root Cause Hypothesis** - What might be causing the issue?
+2. **Affected Components** - Which files/modules are involved?
+3. **Related Code Paths** - Trace the execution flow
+4. **Potential Solutions** - Possible approaches to fix
+
+### 6. Present Analysis
+
+Provide a structured analysis report to the user:
+
+```markdown
+## Issue Analysis: #<NUMBER>
+
+### Summary
+<Brief description of the issue>
+
+### Problem Understanding
+<What the issue is about, including any inferred details>
+
+### Missing Information
+<What details would help clarify the issue>
+
+### Codebase Investigation
+
+#### Relevant Files
+- `path/to/file1.java` - <why it's relevant>
+- `path/to/file2.java` - <why it's relevant>
+
+#### Related Repositories
+- [ ] Wanaku Capabilities Java SDK - <relevant/not relevant>
+- [ ] Camel Integration Capability - <relevant/not relevant>
+
+### Root Cause Hypothesis
+<What might be causing the problem>
+
+### Suggested Next Steps
+1. <action 1>
+2. <action 2>
+
+### Questions for Issue Reporter
+- <question 1>
+- <question 2>
+```
+
+### 7. Suggest Follow-up Actions
+
+Based on the analysis, recommend:
+
+- **If issue needs more info**: Suggest questions to ask the reporter
+- **If ready to fix**: Direct to `/wanaku-fix-issue <NUMBER>`
+- **If involves SDK**: Direct to `/wanaku-capabilities-java-sdk-fix-issue`
+- **If involves Camel**: Direct to `/camel-integration-capability-fix-issue`
+
+### 8. Constraints
+
+You MUST:
+- Read the issue thoroughly before investigating code
+- Search across all relevant repositories when appropriate
+- Present findings clearly and structured
+- Identify what information is missing
+- Suggest concrete next steps
+
+You MUST NOT:
+- Make changes to any code (analysis only)
+- Close or modify the GitHub issue
+- Make assumptions without stating them as hypotheses
+- Skip investigating related repositories when relevant
+
+### 9. Acceptance Criteria
+
+- Issue is fully analyzed with structured report
+- Relevant code sections are identified
+- Root cause hypothesis is provided (if possible)
+- Clear next steps are recommended
+- Missing information is identified for follow-up
