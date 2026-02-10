@@ -24,6 +24,9 @@ COMMAND_FILES=(
     "wanaku/wanaku-create-issue.md"
     "wanaku/wanaku-find-task.md"
     "wanaku/wanaku-fix-issue.md"
+    "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-create-issue.md"
+    "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-find-task.md"
+    "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-fix-issue.md"
 )
 
 # Colors for output

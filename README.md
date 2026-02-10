@@ -56,6 +56,14 @@ cp camel-core/*.md ~/.bob/commands/
 | `/wanaku-find-task` | Find an issue to contribute based on experience |
 | `/wanaku-fix-issue <issue>` | Fix a GitHub issue from Wanaku repository |
 
+### Wanaku Capabilities Java SDK
+
+| Command | Description |
+|---------|-------------|
+| `/wanaku-capabilities-java-sdk-create-issue <title>` | Create a new issue in the SDK repository |
+| `/wanaku-capabilities-java-sdk-find-task` | Find an issue to contribute based on experience |
+| `/wanaku-capabilities-java-sdk-fix-issue <issue>` | Fix a GitHub issue from the SDK repository |
+
 ## Usage Examples
 
 ### Fix SonarCloud Issues (Camel)
@@ -171,9 +179,14 @@ ai-agents-oss-helper/
 │   ├── camel-core-find-task.md
 │   ├── camel-core-fix-jira-issue.md
 │   └── camel-fix-sonarcloud.md
-└── wanaku/                 # Wanaku commands
-    ├── wanaku-find-task.md
-    └── wanaku-fix-issue.md
+├── wanaku/                 # Wanaku commands
+│   ├── wanaku-create-issue.md
+│   ├── wanaku-find-task.md
+│   └── wanaku-fix-issue.md
+└── wanaku-capabilities-java-sdk/  # Wanaku Capabilities Java SDK commands
+    ├── wanaku-capabilities-java-sdk-create-issue.md
+    ├── wanaku-capabilities-java-sdk-find-task.md
+    └── wanaku-capabilities-java-sdk-fix-issue.md
 ```
 
 ## Contributing
