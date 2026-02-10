@@ -18,6 +18,7 @@ AGENTS=("claude" "bob")
 # Command files to install (relative paths from repo root)
 COMMAND_FILES=(
     "ai-agents-oss-helper/ai-agents-oss-helper-create-cmd.md"
+    "ai-agents-oss-helper/ai-agents-oss-helper-create-issue.md"
     "camel-core/camel-fix-sonarcloud.md"
     "camel-core/camel-core-fix-jira-issue.md"
     "camel-core/camel-core-find-task.md"

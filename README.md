@@ -39,6 +39,7 @@ cp camel-core/*.md ~/.bob/commands/
 | Command | Description |
 |---------|-------------|
 | `/ai-agents-oss-helper-create-cmd <name> <description>` | Create a new command for this project |
+| `/ai-agents-oss-helper-create-issue <title>` | Create a new issue in this repository |
 
 ### Apache Camel
 
@@ -200,7 +201,8 @@ ai-agents-oss-helper/
 ├── install.sh              # Installation script
 ├── README.md
 ├── ai-agents-oss-helper/   # Meta commands
-│   └── ai-agents-oss-helper-create-cmd.md
+│   ├── ai-agents-oss-helper-create-cmd.md
+│   └── ai-agents-oss-helper-create-issue.md
 ├── camel-core/             # Apache Camel commands
 │   ├── camel-core-find-task.md
 │   ├── camel-core-fix-jira-issue.md
