@@ -12,7 +12,7 @@
 set -euo pipefail
 
 # Configuration
-BASE_URL="${BASE_URL:-https://raw.githubusercontent.com/YOUR_ORG/ai-agents-oss-helper/main}"
+BASE_URL="${BASE_URL:-https://raw.githubusercontent.com/orpiske/ai-agents-oss-helper/main}"
 AGENTS=("claude" "bob")
 
 # Command files to install (relative paths from repo root)
