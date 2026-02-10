@@ -34,6 +34,12 @@ cp camel-core/*.md ~/.bob/commands/
 
 ## Available Commands
 
+### AI Agents OSS Helper (Meta)
+
+| Command | Description |
+|---------|-------------|
+| `/ai-agents-oss-helper-create-cmd <name> <description>` | Create a new command for this project |
+
 ### Apache Camel
 
 | Command | Description |
@@ -123,9 +129,18 @@ Commands are Markdown files with:
 
 ## Adding New Commands
 
-1. Create a `.md` file in the appropriate directory (e.g., `camel-core/`)
+Use the meta-command to create new commands:
+
+```bash
+/ai-agents-oss-helper-create-cmd myproject-fix-issues "fixes issues on MyProject, found at https://github.com/org/myproject/issues"
+```
+
+Or manually:
+
+1. Create a `.md` file in the appropriate directory (e.g., `myproject/`)
 2. Follow the existing command structure
 3. Add the file path to `COMMAND_FILES` array in `install.sh`
+4. Update README.md with the new command
 
 ## Project Structure
 
@@ -133,6 +148,8 @@ Commands are Markdown files with:
 ai-agents-oss-helper/
 ├── install.sh              # Installation script
 ├── README.md
+├── ai-agents-oss-helper/   # Meta commands
+│   └── ai-agents-oss-helper-create-cmd.md
 ├── camel-core/             # Apache Camel commands
 │   ├── camel-core-find-task.md
 │   ├── camel-core-fix-jira-issue.md
