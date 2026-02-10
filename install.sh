@@ -20,6 +20,7 @@ COMMAND_FILES=(
     "camel-core/camel-fix-sonarcloud.md"
     "camel-core/camel-core-fix-jira-issue.md"
     "camel-core/camel-core-find-task.md"
+    "wanaku/wanaku-fix-issue.md"
 )
 
 # Colors for output

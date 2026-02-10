@@ -42,9 +42,15 @@ cp camel-core/*.md ~/.bob/commands/
 | `/camel-core-fix-jira-issue <issue>` | Fix a Jira issue from ASF tracker |
 | `/camel-fix-sonarcloud <rule>` | Fix SonarCloud issues for any rule |
 
+### Wanaku
+
+| Command | Description |
+|---------|-------------|
+| `/wanaku-fix-issue <issue>` | Fix a GitHub issue from Wanaku repository |
+
 ## Usage Examples
 
-### Fix SonarCloud Issues
+### Fix SonarCloud Issues (Camel)
 
 ```bash
 # Fix cognitive complexity issues
@@ -58,6 +64,16 @@ cp camel-core/*.md ~/.bob/commands/
 
 # Limit number of issues to process
 /camel-fix-sonarcloud S6126 limit=10
+```
+
+### Fix Wanaku Issues
+
+```bash
+# Using issue number
+/wanaku-fix-issue 42
+
+# Using full URL
+/wanaku-fix-issue https://github.com/wanaku-ai/wanaku/issues/42
 ```
 
 ### Find a Task to Contribute
@@ -103,10 +119,12 @@ Commands are Markdown files with:
 ai-agents-oss-helper/
 ├── install.sh              # Installation script
 ├── README.md
-└── camel-core/             # Apache Camel commands
-    ├── camel-core-find-task.md
-    ├── camel-core-fix-jira-issue.md
-    └── camel-fix-sonarcloud.md
+├── camel-core/             # Apache Camel commands
+│   ├── camel-core-find-task.md
+│   ├── camel-core-fix-jira-issue.md
+│   └── camel-fix-sonarcloud.md
+└── wanaku/                 # Wanaku commands
+    └── wanaku-fix-issue.md
 ```
 
 ## Contributing
