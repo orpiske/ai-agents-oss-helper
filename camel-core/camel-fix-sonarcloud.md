@@ -87,7 +87,7 @@ You MUST NOT:
    - Run formatting: `cd <module> && mvn -DskipTests install`
    - Run tests: `mvn verify`
    - **If tests pass**: Commit with message `(chores): fix SonarCloud <rule> in <component>`
-   - **If tests fail**: Run `notify-pushover 'SonarCloud fix failed for <module>'`, skip commit, continue to next module
+   - **If tests fail**: Skip commit, continue to next module
 
 3. **Push**: After all modules processed
    ```bash
