@@ -8,7 +8,7 @@ This rule file contains branching, commit, PR, and task-finding conventions for 
 - **Commit format (fix-issue):** `<ISSUE_ID>: <brief description of fix>`
 - **Commit format (quick-fix):** `chore: <brief description>`
 - **Commit format (sonarcloud):** `(chores): fix SonarCloud <rule> in <component>`
-- **PR creation:** not created automatically for fix-issue, always for quick-fix
+- **PR creation:** always
 - **Find-task source:** Jira
 - **Find-task beginner JQL:** `project = CAMEL AND status = Open AND labels = good-first-issue` (maxResults=10)
 - **Find-task intermediate:** Filter 12352792 (easy issues)
