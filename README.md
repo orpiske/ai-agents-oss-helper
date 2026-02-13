@@ -18,6 +18,7 @@ Generic commands for AI coding agents (Claude, Bob) to help contribute to open s
 | Kaoto | GitHub | `KaotoIO/kaoto` |
 | Forage | GitHub | `KaotoIO/forage` |
 | AI Agents OSS Helper | GitHub | `orpiske/ai-agents-oss-helper` |
+| Generic GitHub | GitHub | _(any unmatched GitHub repo)_ |
 
 ## Installation
 
@@ -226,7 +227,11 @@ ai-agents-oss-helper/
     │   ├── project-info.md
     │   ├── project-standards.md
     │   └── project-guidelines.md
-    └── ai-agents-oss-helper/
+    ├── ai-agents-oss-helper/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    └── generic-github/
         ├── project-info.md
         ├── project-standards.md
         └── project-guidelines.md

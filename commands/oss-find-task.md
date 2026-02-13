@@ -32,7 +32,7 @@ Match the output against the remote patterns to determine the project directory:
 - `KaotoIO/forage` -> `forage`
 - `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
-If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+If no match is found, fall back to the `generic-github` rules directory. Extract the GitHub org/repo from the remote URL (e.g., `https://github.com/org/repo.git` or `git@github.com:org/repo.git` -> `org/repo`) and use it as the project's GitHub repository for all operations.
 
 Once matched, read the project's rule files from the corresponding subdirectory:
 - `<project>/project-info.md` - Repository metadata, issue tracker, related repos

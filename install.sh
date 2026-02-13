@@ -65,6 +65,9 @@ RULE_FILES=(
     "rules/ai-agents-oss-helper/project-info.md"
     "rules/ai-agents-oss-helper/project-standards.md"
     "rules/ai-agents-oss-helper/project-guidelines.md"
+    "rules/generic-github/project-info.md"
+    "rules/generic-github/project-standards.md"
+    "rules/generic-github/project-guidelines.md"
 )
 
 # Old rule files to clean up (relative paths under rules/)
