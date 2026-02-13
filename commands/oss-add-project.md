@@ -38,12 +38,14 @@ From the description, identify:
 
 Ask the user to confirm or provide any missing details.
 
-### 3. Update Rule Files
+### 3. Create Rule Files
 
-Add a new section for the project in each of the three rule files:
+Create a new subdirectory under `rules/` named after the project (e.g., `rules/my-project/`) and add three rule files:
 
-#### A. `rules/project-info.md`
-Add a new H2 section with:
+#### A. `rules/<project>/project-info.md`
+Create with:
+- H1 heading: `# Project Information`
+- Intro paragraph (same as other project-info files)
 - Remote pattern
 - GitHub repo
 - Issue tracker type and URL
@@ -53,43 +55,60 @@ Add a new H2 section with:
 - Related repositories
 - Create-issue support
 
-#### B. `rules/project-standards.md`
-Add a new H2 section with:
+#### B. `rules/<project>/project-standards.md`
+Create with:
+- H1 heading: `# Project Standards`
+- Intro paragraph (same as other project-standards files)
 - Build tool
 - Build/test/format commands
 - Module-specific build rules
 - Parallelized Maven flag
 - Code style restrictions
 
-#### C. `rules/project-guidelines.md`
-Add a new H2 section with:
+#### C. `rules/<project>/project-guidelines.md`
+Create with:
+- H1 heading: `# Project Guidelines`
+- Intro paragraph (same as other project-guidelines files)
 - Branch naming patterns
 - Commit message formats
 - PR creation policy
 - Find-task labels/JQL
 - Scope-too-large redirect
 
+Use existing project files (e.g., `rules/wanaku/`) as a template for the format.
+
 ### 4. Update install.sh
 
-If the project introduces new commands or changes, update the install script accordingly.
+Add the three new rule file paths to the `RULE_FILES` array in `install.sh`:
+```
+"rules/<project>/project-info.md"
+"rules/<project>/project-standards.md"
+"rules/<project>/project-guidelines.md"
+```
 
-### 5. Update README.md
+### 5. Update Command Files
+
+Add the new remote pattern -> project directory mapping to the "Detect Project" section in all command files under `commands/`.
+
+### 6. Update README.md
 
 Add the new project to the supported projects table in README.md.
 
-### 6. Constraints
+### 7. Constraints
 
 You MUST:
-- Follow the existing format of each rule file exactly
+- Follow the existing format of each rule file exactly (use other project directories as templates)
 - Confirm all details with the user before making changes
-- Update all three rule files consistently
+- Create all three rule files in the new subdirectory
+- Update install.sh with the new file paths
+- Update the remote pattern mapping in all command files
 
 You MUST NOT:
 - Create per-project command files (all commands are generic)
-- Modify existing project sections without user consent
-- Skip updating any of the three rule files
+- Modify existing project directories without user consent
+- Skip creating any of the three rule files
 
-### 7. Output
+### 8. Output
 
 After adding the project, confirm:
 - Files updated

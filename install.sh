@@ -28,9 +28,28 @@ COMMAND_FILES=(
 
 # Rule files to install (relative paths from repo root)
 RULE_FILES=(
-    "rules/project-info.md"
-    "rules/project-standards.md"
-    "rules/project-guidelines.md"
+    "rules/wanaku/project-info.md"
+    "rules/wanaku/project-standards.md"
+    "rules/wanaku/project-guidelines.md"
+    "rules/wanaku-capabilities-java-sdk/project-info.md"
+    "rules/wanaku-capabilities-java-sdk/project-standards.md"
+    "rules/wanaku-capabilities-java-sdk/project-guidelines.md"
+    "rules/camel-integration-capability/project-info.md"
+    "rules/camel-integration-capability/project-standards.md"
+    "rules/camel-integration-capability/project-guidelines.md"
+    "rules/camel-core/project-info.md"
+    "rules/camel-core/project-standards.md"
+    "rules/camel-core/project-guidelines.md"
+    "rules/ai-agents-oss-helper/project-info.md"
+    "rules/ai-agents-oss-helper/project-standards.md"
+    "rules/ai-agents-oss-helper/project-guidelines.md"
+)
+
+# Old rule files to clean up (relative paths under rules/)
+OLD_RULE_FILES=(
+    "project-info.md"
+    "project-standards.md"
+    "project-guidelines.md"
 )
 
 # Old command files to clean up (basenames only)
@@ -147,17 +166,26 @@ install_for_agent() {
         fi
     done
 
-    # Install rule files
+    # Remove old monolithic rule files
+    info "  Cleaning up old rule files..."
+    for old_file in "${OLD_RULE_FILES[@]}"; do
+        rm -f "$rules_dir/$old_file"
+    done
+
+    # Install rule files (with subdirectories)
     info "  Installing rules..."
     for file in "${RULE_FILES[@]}"; do
-        local filename
-        filename="$(basename "$file")"
-        local dest="$rules_dir/$filename"
+        local rel_path="${file#rules/}"
+        local dest="$rules_dir/$rel_path"
+        local dest_dir
+        dest_dir="$(dirname "$dest")"
+
+        mkdir -p "$dest_dir"
 
         if fetch_file "$file" "$dest"; then
-            info "    Installed: $filename"
+            info "    Installed: $rel_path"
         else
-            error "    Failed to install: $filename"
+            error "    Failed to install: $rel_path"
             return 1
         fi
     done

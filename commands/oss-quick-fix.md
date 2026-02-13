@@ -28,9 +28,19 @@ Determine the current project by running:
 git remote get-url origin
 ```
 
-Match the output against the remote patterns in `project-info.md`.
+Match the output against the remote patterns to determine the project directory:
+- `wanaku-ai/wanaku` -> `wanaku`
+- `wanaku-ai/wanaku-capabilities-java-sdk` -> `wanaku-capabilities-java-sdk`
+- `wanaku-ai/camel-integration-capability` -> `camel-integration-capability`
+- `apache/camel` -> `camel-core`
+- `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
 If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+
+Once matched, read the project's rule files from the corresponding subdirectory:
+- `<project>/project-info.md` - Repository metadata, issue tracker, related repos
+- `<project>/project-standards.md` - Build tools, commands, code style
+- `<project>/project-guidelines.md` - Branching, commits, PR policies
 
 ### 2. Parse Input
 
@@ -46,7 +56,7 @@ Before proceeding, verify the change qualifies as a quick fix. Acceptable change
 - **Minor code fixes** - Trivial corrections that don't alter behavior
 - **Configuration changes** - Small updates to project configuration
 
-If the change is too large or complex (e.g., new features, architectural changes, refactoring), stop and suggest the appropriate action from `project-guidelines.md` (e.g., `/oss-create-issue` for GitHub projects, or creating a Jira issue for Jira projects).
+If the change is too large or complex (e.g., new features, architectural changes, refactoring), stop and suggest the appropriate action from the project's `project-guidelines.md` (e.g., `/oss-create-issue` for GitHub projects, or creating a Jira issue for Jira projects).
 
 ### 4. Locate Relevant Files
 
@@ -65,11 +75,11 @@ Apply changes following these principles:
 - **Clean** - Keep code readable and consistent with surrounding style
 - **Tested** - If the change touches code (not docs/CI), verify tests still pass
 
-Read `project-standards.md` for project-specific build constraints (e.g., no Records/Lombok for camel-core, module-specific builds, etc.).
+Read the project's `project-standards.md` for project-specific build constraints (e.g., no Records/Lombok for camel-core, module-specific builds, etc.).
 
 ### 6. Workflow
 
-Read branch naming and commit format from `project-guidelines.md`.
+Read branch naming and commit format from the project's `project-guidelines.md`.
 
 1. **Branch**: Create from main with a descriptive name
    ```bash
@@ -79,12 +89,12 @@ Read branch naming and commit format from `project-guidelines.md`.
 
 2. **Implement**: Make the necessary changes
 
-3. **Format & Build**: Run the build commands from `project-standards.md`
+3. **Format & Build**: Run the build commands from the project's `project-standards.md`
    - For projects with module-specific builds (camel-core): run formatting in the module directory first, then test
    - For documentation-only changes, the build step may be skipped if no code was modified
    - For projects with no build tool (ai-agents-oss-helper): skip build
 
-4. **Commit**: Use the quick-fix commit format from `project-guidelines.md`
+4. **Commit**: Use the quick-fix commit format from the project's `project-guidelines.md`
    ```bash
    git add <changed-files>
    git commit -m "chore: <brief description>"
@@ -119,7 +129,7 @@ You MUST NOT:
 
 ### 8. Acceptance Criteria
 
-- All tests pass for code changes (using the test command from `project-standards.md`)
+- All tests pass for code changes (using the test command from the project's `project-standards.md`)
 - Changes are minimal and match the described fix
 - A pull request has been created with a clear title and description
 - Work is done on a branch, not on `main`
