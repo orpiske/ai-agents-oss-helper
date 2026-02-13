@@ -10,6 +10,7 @@ Generic commands for AI coding agents (Claude, Bob) to help contribute to open s
 | Wanaku Capabilities Java SDK | GitHub | `wanaku-ai/wanaku-capabilities-java-sdk` |
 | Camel Integration Capability | GitHub | `wanaku-ai/camel-integration-capability` |
 | Apache Camel (camel-core) | Jira | `apache/camel` |
+| Apache Camel Quarkus | GitHub | `apache/camel-quarkus` |
 | AI Agents OSS Helper | GitHub | `orpiske/ai-agents-oss-helper` |
 
 ## Installation
@@ -188,6 +189,10 @@ ai-agents-oss-helper/
     │   ├── project-standards.md
     │   └── project-guidelines.md
     ├── camel-core/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── camel-quarkus/
     │   ├── project-info.md
     │   ├── project-standards.md
     │   └── project-guidelines.md
