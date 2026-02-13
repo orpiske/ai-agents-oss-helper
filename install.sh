@@ -26,6 +26,7 @@ COMMAND_FILES=(
     "commands/oss-fix-sonarcloud.md"
     "commands/oss-add-project.md"
     "commands/oss-update-knowledge.md"
+    "commands/oss-fix-ci-errors.md"
 )
 
 # Rule files to install (relative paths from repo root)

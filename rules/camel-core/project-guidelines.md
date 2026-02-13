@@ -7,6 +7,8 @@ This rule file contains branching, commit, PR, and task-finding conventions for 
 - **SonarCloud branch:** `ci-camel-4-sonarcloud-<rule>` (customizable via `branch=<name>` option)
 - **Commit format (fix-issue):** `<ISSUE_ID>: <brief description of fix>`
 - **Commit format (quick-fix):** `chore: <brief description>`
+- **CI-fix branch:** `ci-fix/<short-slug>`
+- **Commit format (ci-fix):** `ci: <brief description>`
 - **Commit format (sonarcloud):** `(chores): fix SonarCloud <rule> in <component>`
 - **PR creation:** always
 - **Find-task source:** Jira

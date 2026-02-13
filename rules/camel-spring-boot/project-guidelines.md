@@ -7,6 +7,8 @@ This rule file contains branching, commit, PR, and task-finding conventions for 
 - **SonarCloud branch:** _(not configured)_
 - **Commit format (fix-issue):** `<ISSUE_ID>: <brief description of fix>`
 - **Commit format (quick-fix):** `chore: <brief description>`
+- **CI-fix branch:** `ci-fix/<short-slug>`
+- **Commit format (ci-fix):** `ci: <brief description>`
 - **PR creation:** always
 - **Find-task source:** Jira
 - **Find-task beginner JQL:** `project = CAMEL AND status = Open AND labels = good-first-issue` (maxResults=10)

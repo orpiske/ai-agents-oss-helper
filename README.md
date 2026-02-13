@@ -54,6 +54,7 @@ cd ai-agents-oss-helper
 | `/oss-fix-sonarcloud <rule>` | Fix SonarCloud issues for a given rule |
 | `/oss-add-project <name> <description>` | Register a new project with the helper |
 | `/oss-update-knowledge <source>` | Update a project's rule files from a description or URL |
+| `/oss-fix-ci-errors [run-id]` | Download CI build reports, identify errors, and fix them |
 
 All commands auto-detect the project from the current directory's git remote.
 
@@ -188,7 +189,8 @@ ai-agents-oss-helper/
 │   ├── oss-analyze-issue.md
 │   ├── oss-fix-sonarcloud.md
 │   ├── oss-add-project.md
-│   └── oss-update-knowledge.md
+│   ├── oss-update-knowledge.md
+│   └── oss-fix-ci-errors.md
 └── rules/                            # Rule files (installed to ~/.{agent}/rules/)
     ├── wanaku/
     │   ├── project-info.md
