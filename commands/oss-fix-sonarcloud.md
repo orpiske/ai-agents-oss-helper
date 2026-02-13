@@ -1,31 +1,45 @@
 # Fix SonarCloud Issues
 
-Fix SonarCloud issues in the Apache Camel codebase.
+Fix SonarCloud issues in the current project's codebase.
 
 ## Usage
 
 ```
-/camel-fix-sonarcloud <rule> [options]
+/oss-fix-sonarcloud <rule> [options]
 ```
 
 **Arguments:**
 - `<rule>` - SonarCloud rule ID (e.g., `S3776`, `S6126`, `java:S1192`)
 
 **Options (optional, space-separated after rule):**
-- `branch=<name>` - Custom branch name (default: `ci-camel-4-sonarcloud-<rule>`)
+- `branch=<name>` - Custom branch name (default from `project-guidelines.md`)
 - `module=<path>` - Limit to specific module (e.g., `components/camel-jms`)
 - `limit=<n>` - Max issues to process (default: all)
 
 ## Instructions
 
-### 1. Gather Context
+### 1. Detect Project
+
+Determine the current project by running:
+
+```bash
+git remote get-url origin
+```
+
+Match the output against the remote patterns in `project-info.md`.
+
+Check the **SonarCloud component key** field. If the project has no SonarCloud component key configured (shows `_(none)_`), stop and tell the user: "SonarCloud is not configured for this project."
+
+If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+
+### 2. Gather Context
 
 #### A. Fetch Open Issues
 
-Retrieve issues from SonarCloud API:
+Retrieve issues from SonarCloud API using the component key from `project-info.md`:
 
 ```bash
-curl "https://sonarcloud.io/api/issues/search?componentKeys=apache_camel&rules=java%3A<rule>&issueStatuses=OPEN%2CCONFIRMED&ps=100"
+curl "https://sonarcloud.io/api/issues/search?componentKeys=<COMPONENT_KEY>&rules=java%3A<rule>&issueStatuses=OPEN%2CCONFIRMED&ps=100"
 ```
 
 The response `issues` array contains:
@@ -50,7 +64,7 @@ The response contains:
 
 **Use the rule description to understand the expected fix pattern.** The `htmlDesc` typically includes "Noncompliant" and "Compliant" code examples.
 
-### 2. Apply Fixes
+### 3. Apply Fixes
 
 For each issue:
 
@@ -59,7 +73,9 @@ For each issue:
 3. **Apply the fix** following the compliant pattern from the rule
 4. **Preserve behavior** - fixes must be semantically equivalent
 
-### 3. Constraints
+Read `project-standards.md` for project-specific code style restrictions.
+
+### 4. Constraints
 
 When fixing issues, you MUST:
 
@@ -67,6 +83,7 @@ When fixing issues, you MUST:
 - **Maintain backwards compatibility** - Do not change public API signatures
 - **Preserve existing behavior** - Fixes must be functionally equivalent
 - **Respect code style** - Match surrounding code conventions
+- Follow the code style restrictions from `project-standards.md`
 
 You MUST NOT:
 
@@ -75,18 +92,21 @@ You MUST NOT:
 - Modify code outside the flagged lines unless necessary for the fix
 - Change method visibility or signatures of public/protected members
 
-### 4. Workflow
+### 5. Workflow
+
+Read branch naming from `project-guidelines.md`.
 
 1. **Branch**: Create from main
    ```bash
    git checkout main && git checkout -b <branch-name>
    ```
+   Use the SonarCloud branch pattern from `project-guidelines.md` (e.g., `ci-camel-4-sonarcloud-<rule>`), or the custom `branch=<name>` if provided.
 
 2. **For each affected module**:
    - Apply fixes to all issues in that module
-   - Run formatting: `cd <module> && mvn -DskipTests install`
-   - Run tests: `mvn verify`
-   - **If tests pass**: Commit with message `(chores): fix SonarCloud <rule> in <component>`
+   - Run formatting using the format command from `project-standards.md`
+   - Run tests using the test command from `project-standards.md`
+   - **If tests pass**: Commit with the sonarcloud commit format from `project-guidelines.md`
    - **If tests fail**: Skip commit, continue to next module
 
 3. **Push**: After all modules processed
@@ -94,18 +114,17 @@ You MUST NOT:
    git push -u origin <branch-name>
    ```
 
-### 5. General Guidelines
+### 6. General Guidelines
 
-- Tests MUST pass before committing (`mvn verify`)
-- Do NOT reformat files manually - use `mvn -DskipTests install`
+- Tests MUST pass before committing
+- Do NOT reformat files manually - use the format command from `project-standards.md`
 - Include auto-formatting changes in commit
 - GPG signing not required
-- Do NOT parallelize Maven jobs (resource intensive)
-- Always run `mvn` in the module directory
+- For camel-core: do NOT parallelize Maven jobs; always run `mvn` in the module directory
 - One commit per module
 
-### 6. Acceptance Criteria
+### 7. Acceptance Criteria
 
-- Every affected module MUST pass integration tests (`mvn verify`)
+- Every affected module MUST pass integration tests
 - Fixes must address the specific SonarCloud rule violation
 - No regressions in functionality

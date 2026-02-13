@@ -1,6 +1,16 @@
 # AI Agents OSS Helper
 
-Custom commands for AI coding agents (Claude, Bob) to help contribute to open source projects.
+Generic commands for AI coding agents (Claude, Bob) to help contribute to open source projects. Commands auto-detect the current project via `git remote get-url origin` and load project-specific configuration from rule files.
+
+## Supported Projects
+
+| Project | Issue Tracker | Repository |
+|---------|--------------|------------|
+| Wanaku | GitHub | `wanaku-ai/wanaku` |
+| Wanaku Capabilities Java SDK | GitHub | `wanaku-ai/wanaku-capabilities-java-sdk` |
+| Camel Integration Capability | GitHub | `wanaku-ai/camel-integration-capability` |
+| Apache Camel (camel-core) | Jira | `apache/camel` |
+| AI Agents OSS Helper | GitHub | `orpiske/ai-agents-oss-helper` |
 
 ## Installation
 
@@ -23,237 +33,155 @@ cd ai-agents-oss-helper
 ./install.sh           # Both
 ```
 
-### Manual Install
-
-Copy command files to your agent's commands directory:
-
-```bash
-cp camel-core/*.md ~/.claude/commands/
-cp camel-core/*.md ~/.bob/commands/
-```
-
 ## Available Commands
 
-### AI Agents OSS Helper (Meta)
-
 | Command | Description |
 |---------|-------------|
-| `/ai-agents-oss-helper-create-cmd <name> <description>` | Create a new command for this project |
-| `/ai-agents-oss-helper-create-issue <title>` | Create a new issue in this repository |
+| `/oss-fix-issue <issue>` | Fix an issue from the project's tracker (GitHub or Jira) |
+| `/oss-find-task` | Find an issue to contribute based on experience level |
+| `/oss-create-issue <title>` | Create a new issue in the project's GitHub repository |
+| `/oss-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
+| `/oss-analyze-issue <issue>` | Analyze an issue to understand the problem and investigate the codebase |
+| `/oss-fix-sonarcloud <rule>` | Fix SonarCloud issues for a given rule |
+| `/oss-add-project <name> <description>` | Register a new project with the helper |
 
-### Apache Camel
-
-| Command | Description |
-|---------|-------------|
-| `/camel-core-find-task` | Find an issue to contribute based on experience |
-| `/camel-core-fix-jira-issue <issue>` | Fix a Jira issue from ASF tracker |
-| `/camel-core-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
-| `/camel-fix-sonarcloud <rule>` | Fix SonarCloud issues for any rule |
-
-### Wanaku
-
-| Command | Description |
-|---------|-------------|
-| `/wanaku-analyze-issue <issue>` | Analyze an issue to understand the problem and investigate the codebase |
-| `/wanaku-create-issue <title>` | Create a new issue in the Wanaku repository |
-| `/wanaku-find-task` | Find an issue to contribute based on experience |
-| `/wanaku-fix-issue <issue>` | Fix a GitHub issue from Wanaku repository |
-| `/wanaku-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
-
-### Wanaku Capabilities Java SDK
-
-| Command | Description |
-|---------|-------------|
-| `/wanaku-capabilities-java-sdk-create-issue <title>` | Create a new issue in the SDK repository |
-| `/wanaku-capabilities-java-sdk-find-task` | Find an issue to contribute based on experience |
-| `/wanaku-capabilities-java-sdk-fix-issue <issue>` | Fix a GitHub issue from the SDK repository |
-| `/wanaku-capabilities-java-sdk-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
-
-### Camel Integration Capability
-
-| Command | Description |
-|---------|-------------|
-| `/camel-integration-capability-create-issue <title>` | Create a new issue in the repository |
-| `/camel-integration-capability-find-task` | Find an issue to contribute based on experience |
-| `/camel-integration-capability-fix-issue <issue>` | Fix a GitHub issue from the repository |
-| `/camel-integration-capability-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
+All commands auto-detect the project from the current directory's git remote.
 
 ## Usage Examples
 
-### Fix SonarCloud Issues (Camel)
+### Fix an Issue
 
 ```bash
-# Fix cognitive complexity issues
-/camel-fix-sonarcloud S3776
+# Navigate to any supported project, then:
 
-# Fix pattern matching for instanceof
-/camel-fix-sonarcloud S6201
+# GitHub project - using issue number
+/oss-fix-issue 42
 
-# Fix issues in a specific module only
-/camel-fix-sonarcloud S3457 module=components/camel-jms
+# GitHub project - using full URL
+/oss-fix-issue https://github.com/wanaku-ai/wanaku/issues/42
 
-# Limit number of issues to process
-/camel-fix-sonarcloud S6126 limit=10
+# Jira project (camel-core) - using issue ID
+/oss-fix-issue CAMEL-20410
+
+# Jira project - using full URL
+/oss-fix-issue https://issues.apache.org/jira/browse/CAMEL-22326
 ```
 
-### Analyze a Wanaku Issue
+### Find a Task
+
+```bash
+# Interactive - asks about your experience level
+/oss-find-task
+```
+
+The command will:
+1. Detect the current project
+2. Ask about your experience level
+3. Search for appropriate issues (good first issue, help wanted, etc.)
+4. Present a list of options
+5. Guide you to use `/oss-fix-issue` to implement
+
+### Analyze an Issue
 
 ```bash
 # Using issue number
-/wanaku-analyze-issue 42
+/oss-analyze-issue 42
 
 # Using full URL
-/wanaku-analyze-issue https://github.com/wanaku-ai/wanaku/issues/42
+/oss-analyze-issue https://github.com/wanaku-ai/wanaku/issues/42
 ```
 
 The command will:
 1. Fetch the issue details and comments
-2. Investigate the Wanaku codebase for relevant code
-3. Check related repos (Capabilities SDK, Camel Integration) if relevant
+2. Investigate the codebase for relevant code
+3. Check related repos if configured
 4. Provide a structured analysis report
 5. Suggest next steps (fix, ask for more info, etc.)
 
-### Create a Wanaku Issue
+### Create an Issue
 
 ```bash
 # Interactive - will prompt for details
-/wanaku-create-issue
+/oss-create-issue
 
 # With title provided
-/wanaku-create-issue "Add support for custom headers in HTTP requests"
+/oss-create-issue "Add support for custom headers in HTTP requests"
 ```
 
-The command will:
-1. Gather issue details (type, description, etc.)
-2. Suggest appropriate labels
-3. Show preview and ask for confirmation
-4. Create the issue and return the URL
-
-### Find a Wanaku Task
-
-```bash
-# Interactive - asks about your experience level
-/wanaku-find-task
-```
-
-The command will:
-1. Ask about your experience level
-2. Search for issues (good first issue or help wanted)
-3. Present a list of options
-4. Guide you to use `/wanaku-fix-issue` to implement
-
-### Fix Wanaku Issues
-
-```bash
-# Using issue number
-/wanaku-fix-issue 42
-
-# Using full URL
-/wanaku-fix-issue https://github.com/wanaku-ai/wanaku/issues/42
-```
-
-### Quick Fix for Wanaku
+### Quick Fix
 
 ```bash
 # Upgrade a dependency
-/wanaku-quick-fix upgrade Quarkus BOM to 3.18.0
+/oss-quick-fix upgrade Quarkus BOM to 3.18.0
 
 # Fix documentation
-/wanaku-quick-fix fix broken link in CONTRIBUTING.md
+/oss-quick-fix fix broken link in CONTRIBUTING.md
 
 # Update CI
-/wanaku-quick-fix update GitHub Actions checkout to v4
+/oss-quick-fix update GitHub Actions checkout to v4
 ```
 
-The command will:
-1. Validate the change is small enough for a quick fix
-2. Create a branch (`quick-fix/<slug>`)
-3. Apply the change and run the build
-4. Commit, push, and create a pull request
-
-### Find a Task to Contribute
+### Fix SonarCloud Issues
 
 ```bash
-# Interactive - asks about your experience level
-/camel-core-find-task
+# Fix cognitive complexity issues
+/oss-fix-sonarcloud S3776
+
+# Fix pattern matching for instanceof
+/oss-fix-sonarcloud S6201
+
+# Fix issues in a specific module only
+/oss-fix-sonarcloud S3457 module=components/camel-jms
+
+# Limit number of issues to process
+/oss-fix-sonarcloud S6126 limit=10
 ```
 
-The command will:
-1. Ask about your experience level
-2. Search for appropriate issues (good-first-issue, easy, help-wanted)
-3. Present a list of options
-4. Guide you to use `/camel-core-fix-jira-issue` to implement
-
-### Fix Jira Issues
+### Add a New Project
 
 ```bash
-# Using issue ID
-/camel-core-fix-jira-issue CAMEL-20410
-
-# Using full URL
-/camel-core-fix-jira-issue https://issues.apache.org/jira/browse/CAMEL-22326
+/oss-add-project my-project "Java project at https://github.com/org/my-project, uses Maven, GitHub issues"
 ```
 
-## Command Structure
+## How It Works
 
-Commands are Markdown files with:
-- **Usage** section describing arguments and options
-- **Instructions** for the agent to follow
-- **Constraints** to ensure safe modifications
-- **Workflow** for branching, testing, and committing
+Commands are generic and project-agnostic. Project-specific configuration is stored in rule files:
 
-## Adding New Commands
+- **`rules/project-info.md`** - Repository URLs, issue trackers, SonarCloud keys, related repos
+- **`rules/project-standards.md`** - Build tools, commands, code style restrictions
+- **`rules/project-guidelines.md`** - Branch naming, commit formats, PR policies, task labels
 
-Use the meta-command to create new commands:
-
-```bash
-/ai-agents-oss-helper-create-cmd myproject-fix-issues "fixes issues on MyProject, found at https://github.com/org/myproject/issues"
-```
-
-Or manually:
-
-1. Create a `.md` file in the appropriate directory (e.g., `myproject/`)
-2. Follow the existing command structure
-3. Add the file path to `COMMAND_FILES` array in `install.sh`
-4. Update README.md with the new command
+When a command runs, it:
+1. Detects the current project via `git remote get-url origin`
+2. Matches against remote patterns in `project-info.md`
+3. Reads project-specific configuration from the rule files
+4. Adapts behavior accordingly (GitHub vs Jira, build commands, constraints, etc.)
 
 ## Project Structure
 
 ```
 ai-agents-oss-helper/
-├── install.sh              # Installation script
+├── install.sh                        # Installation script
 ├── README.md
-├── ai-agents-oss-helper/   # Meta commands
-│   ├── ai-agents-oss-helper-create-cmd.md
-│   └── ai-agents-oss-helper-create-issue.md
-├── camel-core/             # Apache Camel commands
-│   ├── camel-core-find-task.md
-│   ├── camel-core-fix-jira-issue.md
-│   ├── camel-core-quick-fix.md
-│   └── camel-fix-sonarcloud.md
-├── wanaku/                 # Wanaku commands
-│   ├── wanaku-analyze-issue.md
-│   ├── wanaku-create-issue.md
-│   ├── wanaku-find-task.md
-│   ├── wanaku-fix-issue.md
-│   └── wanaku-quick-fix.md
-├── wanaku-capabilities-java-sdk/  # Wanaku Capabilities Java SDK commands
-│   ├── wanaku-capabilities-java-sdk-create-issue.md
-│   ├── wanaku-capabilities-java-sdk-find-task.md
-│   ├── wanaku-capabilities-java-sdk-fix-issue.md
-│   └── wanaku-capabilities-java-sdk-quick-fix.md
-└── camel-integration-capability/  # Camel Integration Capability commands
-    ├── camel-integration-capability-create-issue.md
-    ├── camel-integration-capability-find-task.md
-    ├── camel-integration-capability-fix-issue.md
-    └── camel-integration-capability-quick-fix.md
+├── commands/                         # Generic commands (installed to ~/.{agent}/commands/)
+│   ├── oss-fix-issue.md
+│   ├── oss-find-task.md
+│   ├── oss-create-issue.md
+│   ├── oss-quick-fix.md
+│   ├── oss-analyze-issue.md
+│   ├── oss-fix-sonarcloud.md
+│   └── oss-add-project.md
+└── rules/                            # Rule files (installed to ~/.{agent}/rules/)
+    ├── project-info.md
+    ├── project-standards.md
+    └── project-guidelines.md
 ```
 
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
-3. Add or modify commands
+3. Add or modify commands/rules
 4. Update `install.sh` if adding new files
 5. Submit a pull request
 
