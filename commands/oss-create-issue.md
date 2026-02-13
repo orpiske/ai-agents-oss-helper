@@ -1,11 +1,11 @@
-# Create AI Agents OSS Helper Issue
+# Create Issue
 
-Create a new issue in the AI Agents OSS Helper GitHub repository.
+Create a new issue in the current project's GitHub repository.
 
 ## Usage
 
 ```
-/ai-agents-oss-helper-create-issue <title>
+/oss-create-issue <title>
 ```
 
 **Arguments:**
@@ -13,20 +13,34 @@ Create a new issue in the AI Agents OSS Helper GitHub repository.
 
 ## Instructions
 
-### 1. Gather Issue Information
+### 1. Detect Project
+
+Determine the current project by running:
+
+```bash
+git remote get-url origin
+```
+
+Match the output against the remote patterns in `project-info.md`.
+
+If the project's **Create-issue supported** field is "no" (e.g., Jira projects like camel-core), stop and tell the user: "Issue creation is not supported for this project. Please create the issue directly in the project's issue tracker."
+
+If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+
+### 2. Gather Issue Information
 
 If title not provided, ask the user for:
 - **Title** - Brief, descriptive title for the issue
 
 Then ask for:
-- **Type** - Bug, enhancement, feature request, new command, documentation, etc.
+- **Type** - Bug, enhancement, feature request, documentation, etc.
 - **Description** - Detailed description of the issue
 - **Reproduction steps** (for bugs) - Steps to reproduce the problem
 - **Expected behavior** - What should happen
 - **Actual behavior** (for bugs) - What currently happens
 - **Additional context** - Any other relevant information
 
-### 2. Determine Labels
+### 3. Determine Labels
 
 Based on the issue type, suggest appropriate labels:
 
@@ -35,14 +49,13 @@ Based on the issue type, suggest appropriate labels:
 | Bug | `bug` |
 | Enhancement | `enhancement` |
 | Feature request | `enhancement` |
-| New command | `enhancement`, `new-command` |
 | Documentation | `documentation` |
 | Good first issue | `good first issue` |
 | Help wanted | `help wanted` |
 
 Ask the user to confirm or modify labels.
 
-### 3. Format Issue Body
+### 4. Format Issue Body
 
 Structure the issue body using this template:
 
@@ -70,7 +83,7 @@ Structure the issue body using this template:
 <context>
 ```
 
-### 4. Confirm with User
+### 5. Confirm with User
 
 Before creating, show the user:
 - Title
@@ -79,31 +92,25 @@ Before creating, show the user:
 
 Ask for confirmation to proceed.
 
-### 5. Create the Issue
+### 6. Create the Issue
 
 Use GitHub CLI to create the issue:
 
 ```bash
-gh issue create --repo orpiske/ai-agents-oss-helper --title "<TITLE>" --label "<LABELS>" --body "$(cat <<'EOF'
+gh issue create --repo <GITHUB_REPO> --title "<TITLE>" --label "<LABELS>" --body "$(cat <<'EOF'
 <BODY_CONTENT>
 EOF
 )"
 ```
 
-### 6. Report Result
+### 7. Report Result
 
 After creation, display:
 - Issue number
 - Issue URL
 - Confirmation message
 
-Example output:
-```
-Issue created successfully!
-Issue #123: https://github.com/orpiske/ai-agents-oss-helper/issues/123
-```
-
-### 7. Constraints
+### 8. Constraints
 
 You MUST:
 - Confirm all details with the user before creating
@@ -117,9 +124,9 @@ You MUST NOT:
 - Skip gathering necessary information
 - Create duplicate issues without checking
 
-### 8. Acceptance Criteria
+### 9. Acceptance Criteria
 
-- Issue is created in the AI Agents OSS Helper repository
+- Issue is created in the project's repository
 - Issue has appropriate title and labels
 - Issue body is well-formatted and informative
 - User is provided with the issue URL

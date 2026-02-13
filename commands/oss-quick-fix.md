@@ -1,30 +1,42 @@
-# Quick Fix for Wanaku Capabilities Java SDK
+# Quick Fix
 
-Apply a quick fix to the Wanaku Capabilities Java SDK codebase without requiring a tracked issue. Intended for small changes such as CI fixes, documentation fixes, dependency upgrades, and other minor improvements.
+Apply a quick fix to the current project's codebase without requiring a tracked issue. Intended for small changes such as CI fixes, documentation fixes, dependency upgrades, and other minor improvements.
 
 ## Usage
 
 ```
-/wanaku-capabilities-java-sdk-quick-fix <description>
+/oss-quick-fix <description>
 ```
 
 **Arguments:**
-- `<description>` - A brief description of the quick fix to apply (e.g., `"upgrade dependency version"`, `"fix typo in README"`)
+- `<description>` - A brief description of the quick fix to apply
 
 **Examples:**
 ```
-/wanaku-capabilities-java-sdk-quick-fix upgrade parent BOM version
-/wanaku-capabilities-java-sdk-quick-fix fix broken link in README
-/wanaku-capabilities-java-sdk-quick-fix update GitHub Actions workflow
+/oss-quick-fix upgrade dependency version in pom.xml
+/oss-quick-fix fix broken link in README
+/oss-quick-fix update GitHub Actions workflow to latest version
 ```
 
 ## Instructions
 
-### 1. Parse Input
+### 1. Detect Project
+
+Determine the current project by running:
+
+```bash
+git remote get-url origin
+```
+
+Match the output against the remote patterns in `project-info.md`.
+
+If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+
+### 2. Parse Input
 
 Extract the description from the argument. This describes the quick fix to apply.
 
-### 2. Validate Scope
+### 3. Validate Scope
 
 Before proceeding, verify the change qualifies as a quick fix. Acceptable changes include:
 
@@ -34,9 +46,9 @@ Before proceeding, verify the change qualifies as a quick fix. Acceptable change
 - **Minor code fixes** - Trivial corrections that don't alter behavior
 - **Configuration changes** - Small updates to project configuration
 
-If the change is too large or complex (e.g., new features, architectural changes, refactoring), stop and suggest creating an issue with `/wanaku-capabilities-java-sdk-create-issue` instead.
+If the change is too large or complex (e.g., new features, architectural changes, refactoring), stop and suggest the appropriate action from `project-guidelines.md` (e.g., `/oss-create-issue` for GitHub projects, or creating a Jira issue for Jira projects).
 
-### 3. Locate Relevant Files
+### 4. Locate Relevant Files
 
 Based on the description:
 
@@ -44,7 +56,7 @@ Based on the description:
 2. Understand what needs to change
 3. Confirm the change is minimal and low-risk
 
-### 4. Implement the Fix
+### 5. Implement the Fix
 
 Apply changes following these principles:
 
@@ -53,23 +65,26 @@ Apply changes following these principles:
 - **Clean** - Keep code readable and consistent with surrounding style
 - **Tested** - If the change touches code (not docs/CI), verify tests still pass
 
-### 5. Workflow
+Read `project-standards.md` for project-specific build constraints (e.g., no Records/Lombok for camel-core, module-specific builds, etc.).
+
+### 6. Workflow
+
+Read branch naming and commit format from `project-guidelines.md`.
 
 1. **Branch**: Create from main with a descriptive name
    ```bash
    git checkout main && git pull && git checkout -b quick-fix/<short-slug>
    ```
-   Use a short slug derived from the description (e.g., `quick-fix/upgrade-bom`, `quick-fix/fix-readme-link`).
+   Use a short slug derived from the description (e.g., `quick-fix/upgrade-quarkus-bom`, `quick-fix/fix-readme-typo`).
 
 2. **Implement**: Make the necessary changes
 
-3. **Build & Test**: Run the build to verify nothing is broken
-   ```bash
-   mvn verify
-   ```
-   For documentation-only changes, the build step may be skipped if no code was modified.
+3. **Format & Build**: Run the build commands from `project-standards.md`
+   - For projects with module-specific builds (camel-core): run formatting in the module directory first, then test
+   - For documentation-only changes, the build step may be skipped if no code was modified
+   - For projects with no build tool (ai-agents-oss-helper): skip build
 
-4. **Commit**: Use a clear, descriptive message
+4. **Commit**: Use the quick-fix commit format from `project-guidelines.md`
    ```bash
    git add <changed-files>
    git commit -m "chore: <brief description>"
@@ -85,13 +100,14 @@ Apply changes following these principles:
    gh pr create --title "chore: <brief description>" --body "<short explanation of what was changed and why>"
    ```
 
-### 6. Constraints
+### 7. Constraints
 
 You MUST:
 - Work on a dedicated branch (never commit to `main`)
 - Create a pull request after pushing
 - Keep changes small and focused
 - Include formatting changes from the build in your commit
+- For camel-core: always run `mvn` in the module directory; do NOT parallelize Maven jobs
 
 You MUST NOT:
 - Make large or behavioral changes without an issue
@@ -99,10 +115,11 @@ You MUST NOT:
 - Skip the build for code changes
 - Combine multiple unrelated fixes in a single quick fix
 - Push directly to `main`
+- For camel-core: change public method signatures
 
-### 7. Acceptance Criteria
+### 8. Acceptance Criteria
 
-- All tests pass (`mvn verify`) for code changes
+- All tests pass for code changes (using the test command from `project-standards.md`)
 - Changes are minimal and match the described fix
 - A pull request has been created with a clear title and description
 - Work is done on a branch, not on `main`

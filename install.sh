@@ -17,25 +17,43 @@ AGENTS=("claude" "bob")
 
 # Command files to install (relative paths from repo root)
 COMMAND_FILES=(
-    "ai-agents-oss-helper/ai-agents-oss-helper-create-cmd.md"
-    "ai-agents-oss-helper/ai-agents-oss-helper-create-issue.md"
-    "camel-core/camel-fix-sonarcloud.md"
-    "camel-core/camel-core-fix-jira-issue.md"
-    "camel-core/camel-core-find-task.md"
-    "camel-core/camel-core-quick-fix.md"
-    "wanaku/wanaku-analyze-issue.md"
-    "wanaku/wanaku-create-issue.md"
-    "wanaku/wanaku-find-task.md"
-    "wanaku/wanaku-fix-issue.md"
-    "wanaku/wanaku-quick-fix.md"
-    "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-create-issue.md"
-    "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-find-task.md"
-    "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-fix-issue.md"
-    "wanaku-capabilities-java-sdk/wanaku-capabilities-java-sdk-quick-fix.md"
-    "camel-integration-capability/camel-integration-capability-create-issue.md"
-    "camel-integration-capability/camel-integration-capability-find-task.md"
-    "camel-integration-capability/camel-integration-capability-fix-issue.md"
-    "camel-integration-capability/camel-integration-capability-quick-fix.md"
+    "commands/oss-fix-issue.md"
+    "commands/oss-find-task.md"
+    "commands/oss-create-issue.md"
+    "commands/oss-quick-fix.md"
+    "commands/oss-analyze-issue.md"
+    "commands/oss-fix-sonarcloud.md"
+    "commands/oss-add-project.md"
+)
+
+# Rule files to install (relative paths from repo root)
+RULE_FILES=(
+    "rules/project-info.md"
+    "rules/project-standards.md"
+    "rules/project-guidelines.md"
+)
+
+# Old command files to clean up (basenames only)
+OLD_COMMAND_FILES=(
+    "camel-fix-sonarcloud.md"
+    "camel-core-fix-jira-issue.md"
+    "camel-core-find-task.md"
+    "camel-core-quick-fix.md"
+    "wanaku-analyze-issue.md"
+    "wanaku-create-issue.md"
+    "wanaku-find-task.md"
+    "wanaku-fix-issue.md"
+    "wanaku-quick-fix.md"
+    "wanaku-capabilities-java-sdk-create-issue.md"
+    "wanaku-capabilities-java-sdk-find-task.md"
+    "wanaku-capabilities-java-sdk-fix-issue.md"
+    "wanaku-capabilities-java-sdk-quick-fix.md"
+    "camel-integration-capability-create-issue.md"
+    "camel-integration-capability-find-task.md"
+    "camel-integration-capability-fix-issue.md"
+    "camel-integration-capability-quick-fix.md"
+    "ai-agents-oss-helper-create-cmd.md"
+    "ai-agents-oss-helper-create-issue.md"
 )
 
 # Colors for output
@@ -92,31 +110,60 @@ fetch_file() {
 # Install commands for a specific agent
 install_for_agent() {
     local agent="$1"
-    local target_dir="$HOME/.$agent/commands"
+    local commands_dir="$HOME/.$agent/commands"
+    local rules_dir="$HOME/.$agent/rules"
 
-    info "Installing commands for $agent..."
+    info "Installing for $agent..."
 
-    # Create target directory
-    if ! mkdir -p "$target_dir"; then
-        error "Failed to create directory: $target_dir"
+    # Create target directories
+    if ! mkdir -p "$commands_dir"; then
+        error "Failed to create directory: $commands_dir"
         return 1
     fi
 
-    # Install each command file
+    if ! mkdir -p "$rules_dir"; then
+        error "Failed to create directory: $rules_dir"
+        return 1
+    fi
+
+    # Remove old command files
+    info "  Cleaning up old commands..."
+    for old_file in "${OLD_COMMAND_FILES[@]}"; do
+        rm -f "$commands_dir/$old_file"
+    done
+
+    # Install new command files
+    info "  Installing commands..."
     for file in "${COMMAND_FILES[@]}"; do
         local filename
         filename="$(basename "$file")"
-        local dest="$target_dir/$filename"
+        local dest="$commands_dir/$filename"
 
         if fetch_file "$file" "$dest"; then
-            info "  Installed: $filename"
+            info "    Installed: $filename"
         else
-            error "  Failed to install: $filename"
+            error "    Failed to install: $filename"
             return 1
         fi
     done
 
-    info "Commands installed to: $target_dir"
+    # Install rule files
+    info "  Installing rules..."
+    for file in "${RULE_FILES[@]}"; do
+        local filename
+        filename="$(basename "$file")"
+        local dest="$rules_dir/$filename"
+
+        if fetch_file "$file" "$dest"; then
+            info "    Installed: $filename"
+        else
+            error "    Failed to install: $filename"
+            return 1
+        fi
+    done
+
+    info "  Commands installed to: $commands_dir"
+    info "  Rules installed to: $rules_dir"
 }
 
 # Main
@@ -147,8 +194,8 @@ main() {
     fi
 
     echo ""
-    echo "AI Agent OSS Helper - Command Installer"
-    echo "========================================"
+    echo "AI Agent OSS Helper - Installer"
+    echo "================================"
     echo ""
 
     # Install for each agent
