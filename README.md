@@ -15,6 +15,7 @@ Generic commands for AI coding agents (Claude, Bob) to help contribute to open s
 | Apache Camel Kafka Connector | GitHub | `apache/camel-kafka-connector` |
 | Apache Camel K | GitHub | `apache/camel-k` |
 | Hawtio | GitHub | `hawtio/hawtio` |
+| Kaoto | GitHub | `KaotoIO/kaoto` |
 | AI Agents OSS Helper | GitHub | `orpiske/ai-agents-oss-helper` |
 
 ## Installation
@@ -213,6 +214,10 @@ ai-agents-oss-helper/
     │   ├── project-standards.md
     │   └── project-guidelines.md
     ├── hawtio/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── kaoto/
     │   ├── project-info.md
     │   ├── project-standards.md
     │   └── project-guidelines.md
