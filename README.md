@@ -13,6 +13,8 @@ Generic commands for AI coding agents (Claude, Bob) to help contribute to open s
 | Apache Camel Quarkus | GitHub | `apache/camel-quarkus` |
 | Apache Camel Spring Boot | Jira | `apache/camel-spring-boot` |
 | Apache Camel Kafka Connector | GitHub | `apache/camel-kafka-connector` |
+| Apache Camel K | GitHub | `apache/camel-k` |
+| Hawtio | GitHub | `hawtio/hawtio` |
 | AI Agents OSS Helper | GitHub | `orpiske/ai-agents-oss-helper` |
 
 ## Installation
@@ -203,6 +205,14 @@ ai-agents-oss-helper/
     │   ├── project-standards.md
     │   └── project-guidelines.md
     ├── camel-kafka-connector/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── camel-k/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── hawtio/
     │   ├── project-info.md
     │   ├── project-standards.md
     │   └── project-guidelines.md
