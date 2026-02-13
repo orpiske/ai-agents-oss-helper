@@ -1,6 +1,6 @@
 # AI Agents OSS Helper
 
-Generic commands for AI coding agents (Claude, Bob) to help contribute to open source projects. Commands auto-detect the current project via `git remote get-url origin` and load project-specific configuration from rule files.
+Generic commands for AI coding agents (Claude, Bob, Gemini) to help contribute to open source projects. Commands auto-detect the current project via `git remote get-url origin` and load project-specific configuration from rule files.
 
 ## Supported Projects
 
@@ -22,7 +22,7 @@ Generic commands for AI coding agents (Claude, Bob) to help contribute to open s
 
 ## Installation
 
-### Quick Install (Both Agents)
+### Quick Install (All Agents)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/orpiske/ai-agents-oss-helper/main/install.sh | bash
@@ -38,7 +38,8 @@ cd ai-agents-oss-helper
 # Install for specific agent
 ./install.sh claude    # Claude only
 ./install.sh bob       # Bob only
-./install.sh           # Both
+./install.sh gemini    # Gemini CLI only
+./install.sh           # All agents
 ```
 
 ## Available Commands
@@ -166,6 +167,12 @@ When a command runs, it:
 2. Matches against remote patterns to determine the project directory
 3. Reads project-specific configuration from `rules/<project>/`
 4. Adapts behavior accordingly (GitHub vs Jira, build commands, constraints, etc.)
+
+## Gemini CLI Notes
+
+Gemini CLI uses TOML command files instead of Markdown. The installer automatically converts `.md` commands to `.toml` format at install time, wrapping the prompt content and extracting the description.
+
+Since Gemini CLI has no auto-loading `rules/` directory, each generated TOML command includes a preamble instructing Gemini to read project rule files from `~/.gemini/rules/<project-directory>/`.
 
 ## Project Structure
 
