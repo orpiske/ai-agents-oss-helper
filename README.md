@@ -47,6 +47,7 @@ cp camel-core/*.md ~/.bob/commands/
 |---------|-------------|
 | `/camel-core-find-task` | Find an issue to contribute based on experience |
 | `/camel-core-fix-jira-issue <issue>` | Fix a Jira issue from ASF tracker |
+| `/camel-core-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
 | `/camel-fix-sonarcloud <rule>` | Fix SonarCloud issues for any rule |
 
 ### Wanaku
@@ -57,6 +58,7 @@ cp camel-core/*.md ~/.bob/commands/
 | `/wanaku-create-issue <title>` | Create a new issue in the Wanaku repository |
 | `/wanaku-find-task` | Find an issue to contribute based on experience |
 | `/wanaku-fix-issue <issue>` | Fix a GitHub issue from Wanaku repository |
+| `/wanaku-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
 
 ### Wanaku Capabilities Java SDK
 
@@ -65,6 +67,7 @@ cp camel-core/*.md ~/.bob/commands/
 | `/wanaku-capabilities-java-sdk-create-issue <title>` | Create a new issue in the SDK repository |
 | `/wanaku-capabilities-java-sdk-find-task` | Find an issue to contribute based on experience |
 | `/wanaku-capabilities-java-sdk-fix-issue <issue>` | Fix a GitHub issue from the SDK repository |
+| `/wanaku-capabilities-java-sdk-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
 
 ### Camel Integration Capability
 
@@ -73,6 +76,7 @@ cp camel-core/*.md ~/.bob/commands/
 | `/camel-integration-capability-create-issue <title>` | Create a new issue in the repository |
 | `/camel-integration-capability-find-task` | Find an issue to contribute based on experience |
 | `/camel-integration-capability-fix-issue <issue>` | Fix a GitHub issue from the repository |
+| `/camel-integration-capability-quick-fix <description>` | Apply a quick fix without a tracked issue (CI, docs, deps, etc.) |
 
 ## Usage Examples
 
@@ -148,6 +152,25 @@ The command will:
 /wanaku-fix-issue https://github.com/wanaku-ai/wanaku/issues/42
 ```
 
+### Quick Fix for Wanaku
+
+```bash
+# Upgrade a dependency
+/wanaku-quick-fix upgrade Quarkus BOM to 3.18.0
+
+# Fix documentation
+/wanaku-quick-fix fix broken link in CONTRIBUTING.md
+
+# Update CI
+/wanaku-quick-fix update GitHub Actions checkout to v4
+```
+
+The command will:
+1. Validate the change is small enough for a quick fix
+2. Create a branch (`quick-fix/<slug>`)
+3. Apply the change and run the build
+4. Commit, push, and create a pull request
+
 ### Find a Task to Contribute
 
 ```bash
@@ -206,20 +229,24 @@ ai-agents-oss-helper/
 ├── camel-core/             # Apache Camel commands
 │   ├── camel-core-find-task.md
 │   ├── camel-core-fix-jira-issue.md
+│   ├── camel-core-quick-fix.md
 │   └── camel-fix-sonarcloud.md
 ├── wanaku/                 # Wanaku commands
 │   ├── wanaku-analyze-issue.md
 │   ├── wanaku-create-issue.md
 │   ├── wanaku-find-task.md
-│   └── wanaku-fix-issue.md
+│   ├── wanaku-fix-issue.md
+│   └── wanaku-quick-fix.md
 ├── wanaku-capabilities-java-sdk/  # Wanaku Capabilities Java SDK commands
 │   ├── wanaku-capabilities-java-sdk-create-issue.md
 │   ├── wanaku-capabilities-java-sdk-find-task.md
-│   └── wanaku-capabilities-java-sdk-fix-issue.md
+│   ├── wanaku-capabilities-java-sdk-fix-issue.md
+│   └── wanaku-capabilities-java-sdk-quick-fix.md
 └── camel-integration-capability/  # Camel Integration Capability commands
     ├── camel-integration-capability-create-issue.md
     ├── camel-integration-capability-find-task.md
-    └── camel-integration-capability-fix-issue.md
+    ├── camel-integration-capability-fix-issue.md
+    └── camel-integration-capability-quick-fix.md
 ```
 
 ## Contributing
