@@ -16,6 +16,7 @@ Generic commands for AI coding agents (Claude, Bob) to help contribute to open s
 | Apache Camel K | GitHub | `apache/camel-k` |
 | Hawtio | GitHub | `hawtio/hawtio` |
 | Kaoto | GitHub | `KaotoIO/kaoto` |
+| Forage | GitHub | `KaotoIO/forage` |
 | AI Agents OSS Helper | GitHub | `orpiske/ai-agents-oss-helper` |
 
 ## Installation
@@ -218,6 +219,10 @@ ai-agents-oss-helper/
     │   ├── project-standards.md
     │   └── project-guidelines.md
     ├── kaoto/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── forage/
     │   ├── project-info.md
     │   ├── project-standards.md
     │   └── project-guidelines.md
