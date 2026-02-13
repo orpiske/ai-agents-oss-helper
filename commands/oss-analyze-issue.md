@@ -21,13 +21,23 @@ Determine the current project by running:
 git remote get-url origin
 ```
 
-Match the output against the remote patterns in `project-info.md`.
+Match the output against the remote patterns to determine the project directory:
+- `wanaku-ai/wanaku` -> `wanaku`
+- `wanaku-ai/wanaku-capabilities-java-sdk` -> `wanaku-capabilities-java-sdk`
+- `wanaku-ai/camel-integration-capability` -> `camel-integration-capability`
+- `apache/camel` -> `camel-core`
+- `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
 If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
 
+Once matched, read the project's rule files from the corresponding subdirectory:
+- `<project>/project-info.md` - Repository metadata, issue tracker, related repos
+- `<project>/project-standards.md` - Build tools, commands, code style
+- `<project>/project-guidelines.md` - Branching, commits, PR policies
+
 ### 2. Parse Input
 
-Extract the issue ID from the argument based on the project's issue tracker type (from `project-info.md`):
+Extract the issue ID from the argument based on the project's issue tracker type (from the project's `project-info.md`):
 
 **GitHub projects:**
 - If full URL: extract the number from the path
@@ -90,7 +100,7 @@ Search the current codebase for relevant code:
 
 #### Related Repositories
 
-Check `project-info.md` for the **Related repositories** field. Only investigate related repos when they are listed and the issue might involve them.
+Check the project's `project-info.md` for the **Related repositories** field. Only investigate related repos when they are listed and the issue might involve them.
 
 For each relevant related repository, clone if needed:
 ```bash
@@ -158,7 +168,7 @@ Based on the analysis, recommend:
 You MUST:
 - Include the :robot: disclaimer note at the beginning of every analysis report
 - Read the issue thoroughly before investigating code
-- Search across all relevant repositories when listed in `project-info.md`
+- Search across all relevant repositories when listed in the project's `project-info.md`
 - Present findings clearly and structured
 - Identify what information is missing
 - Suggest concrete next steps

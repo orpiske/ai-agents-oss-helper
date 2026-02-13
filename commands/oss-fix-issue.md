@@ -21,18 +21,23 @@ Determine the current project by running:
 git remote get-url origin
 ```
 
-Match the output against the remote patterns in `project-info.md`:
-- `wanaku-ai/wanaku` -> Wanaku
-- `wanaku-ai/wanaku-capabilities-java-sdk` -> Wanaku Capabilities Java SDK
-- `wanaku-ai/camel-integration-capability` -> Camel Integration Capability
-- `apache/camel` -> Apache Camel (camel-core)
-- `orpiske/ai-agents-oss-helper` -> AI Agents OSS Helper
+Match the output against the remote patterns to determine the project directory:
+- `wanaku-ai/wanaku` -> `wanaku`
+- `wanaku-ai/wanaku-capabilities-java-sdk` -> `wanaku-capabilities-java-sdk`
+- `wanaku-ai/camel-integration-capability` -> `camel-integration-capability`
+- `apache/camel` -> `camel-core`
+- `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
 If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
 
+Once matched, read the project's rule files from the corresponding subdirectory:
+- `<project>/project-info.md` - Repository metadata, issue tracker, related repos
+- `<project>/project-standards.md` - Build tools, commands, code style
+- `<project>/project-guidelines.md` - Branching, commits, PR policies
+
 ### 2. Parse Input
 
-Extract the issue ID from the argument based on the project's issue tracker type (from `project-info.md`):
+Extract the issue ID from the argument based on the project's issue tracker type (from the project's `project-info.md`):
 
 **GitHub projects:**
 - If full URL (e.g., `https://github.com/wanaku-ai/wanaku/issues/42`): extract the number from the path
@@ -97,7 +102,7 @@ Apply changes following these principles:
 - **Tested** - All changes must have appropriate test coverage
 - **Minimal** - Fix only what's needed for this issue
 
-Read `project-standards.md` for project-specific build constraints (e.g., no Records/Lombok for camel-core, module-specific builds, etc.).
+Read the project's `project-standards.md` for project-specific build constraints (e.g., no Records/Lombok for camel-core, module-specific builds, etc.).
 
 ### 7. Constraints
 
@@ -106,7 +111,7 @@ You MUST:
 - Include tests for the fix
 - Keep code clean and maintainable
 - Include auto-formatting changes in commits
-- Follow the code style restrictions from `project-standards.md`
+- Follow the code style restrictions from the project's `project-standards.md`
 
 You MUST NOT:
 - Refactor unrelated code
@@ -118,21 +123,21 @@ You MUST NOT:
 
 ### 8. Workflow
 
-Read branch naming and commit format from `project-guidelines.md`.
+Read branch naming and commit format from the project's `project-guidelines.md`.
 
 1. **Branch**: Create from main
    ```bash
    git checkout main && git pull && git checkout -b <BRANCH_NAME>
    ```
-   Use the branch naming pattern from `project-guidelines.md` (e.g., `ci-issue-<ISSUE_ID>`).
+   Use the branch naming pattern from the project's `project-guidelines.md` (e.g., `ci-issue-<ISSUE_ID>`).
 
 2. **Implement**: Make necessary code changes
 
-3. **Format & Build**: Run the build commands from `project-standards.md`
+3. **Format & Build**: Run the build commands from the project's `project-standards.md`
    - For projects with module-specific builds (camel-core): run formatting in the module directory first, then test
    - For other projects: run `mvn verify` from root
 
-4. **Commit**: Use the commit format from `project-guidelines.md`
+4. **Commit**: Use the commit format from the project's `project-guidelines.md`
    ```bash
    git add -A
    git commit -m "<COMMIT_MESSAGE>"

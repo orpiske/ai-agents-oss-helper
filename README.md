@@ -147,14 +147,15 @@ The command will:
 
 Commands are generic and project-agnostic. Project-specific configuration is stored in rule files:
 
-- **`rules/project-info.md`** - Repository URLs, issue trackers, SonarCloud keys, related repos
-- **`rules/project-standards.md`** - Build tools, commands, code style restrictions
-- **`rules/project-guidelines.md`** - Branch naming, commit formats, PR policies, task labels
+Each project has its own subdirectory under `rules/` with three files:
+- **`project-info.md`** - Repository URLs, issue trackers, SonarCloud keys, related repos
+- **`project-standards.md`** - Build tools, commands, code style restrictions
+- **`project-guidelines.md`** - Branch naming, commit formats, PR policies, task labels
 
 When a command runs, it:
 1. Detects the current project via `git remote get-url origin`
-2. Matches against remote patterns in `project-info.md`
-3. Reads project-specific configuration from the rule files
+2. Matches against remote patterns to determine the project directory
+3. Reads project-specific configuration from `rules/<project>/`
 4. Adapts behavior accordingly (GitHub vs Jira, build commands, constraints, etc.)
 
 ## Project Structure
@@ -172,9 +173,26 @@ ai-agents-oss-helper/
 │   ├── oss-fix-sonarcloud.md
 │   └── oss-add-project.md
 └── rules/                            # Rule files (installed to ~/.{agent}/rules/)
-    ├── project-info.md
-    ├── project-standards.md
-    └── project-guidelines.md
+    ├── wanaku/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── wanaku-capabilities-java-sdk/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── camel-integration-capability/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    ├── camel-core/
+    │   ├── project-info.md
+    │   ├── project-standards.md
+    │   └── project-guidelines.md
+    └── ai-agents-oss-helper/
+        ├── project-info.md
+        ├── project-standards.md
+        └── project-guidelines.md
 ```
 
 ## Contributing

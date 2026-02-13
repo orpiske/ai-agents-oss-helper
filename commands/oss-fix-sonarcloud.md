@@ -12,7 +12,7 @@ Fix SonarCloud issues in the current project's codebase.
 - `<rule>` - SonarCloud rule ID (e.g., `S3776`, `S6126`, `java:S1192`)
 
 **Options (optional, space-separated after rule):**
-- `branch=<name>` - Custom branch name (default from `project-guidelines.md`)
+- `branch=<name>` - Custom branch name (default from the project's `project-guidelines.md`)
 - `module=<path>` - Limit to specific module (e.g., `components/camel-jms`)
 - `limit=<n>` - Max issues to process (default: all)
 
@@ -26,17 +26,27 @@ Determine the current project by running:
 git remote get-url origin
 ```
 
-Match the output against the remote patterns in `project-info.md`.
-
-Check the **SonarCloud component key** field. If the project has no SonarCloud component key configured (shows `_(none)_`), stop and tell the user: "SonarCloud is not configured for this project."
+Match the output against the remote patterns to determine the project directory:
+- `wanaku-ai/wanaku` -> `wanaku`
+- `wanaku-ai/wanaku-capabilities-java-sdk` -> `wanaku-capabilities-java-sdk`
+- `wanaku-ai/camel-integration-capability` -> `camel-integration-capability`
+- `apache/camel` -> `camel-core`
+- `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
 If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+
+Once matched, read the project's rule files from the corresponding subdirectory:
+- `<project>/project-info.md` - Repository metadata, issue tracker, related repos
+- `<project>/project-standards.md` - Build tools, commands, code style
+- `<project>/project-guidelines.md` - Branching, commits, PR policies
+
+Check the **SonarCloud component key** field in the project's `project-info.md`. If the project has no SonarCloud component key configured (shows `_(none)_`), stop and tell the user: "SonarCloud is not configured for this project."
 
 ### 2. Gather Context
 
 #### A. Fetch Open Issues
 
-Retrieve issues from SonarCloud API using the component key from `project-info.md`:
+Retrieve issues from SonarCloud API using the component key from the project's `project-info.md`:
 
 ```bash
 curl "https://sonarcloud.io/api/issues/search?componentKeys=<COMPONENT_KEY>&rules=java%3A<rule>&issueStatuses=OPEN%2CCONFIRMED&ps=100"
@@ -73,7 +83,7 @@ For each issue:
 3. **Apply the fix** following the compliant pattern from the rule
 4. **Preserve behavior** - fixes must be semantically equivalent
 
-Read `project-standards.md` for project-specific code style restrictions.
+Read the project's `project-standards.md` for project-specific code style restrictions.
 
 ### 4. Constraints
 
@@ -83,7 +93,7 @@ When fixing issues, you MUST:
 - **Maintain backwards compatibility** - Do not change public API signatures
 - **Preserve existing behavior** - Fixes must be functionally equivalent
 - **Respect code style** - Match surrounding code conventions
-- Follow the code style restrictions from `project-standards.md`
+- Follow the code style restrictions from the project's `project-standards.md`
 
 You MUST NOT:
 
@@ -94,19 +104,19 @@ You MUST NOT:
 
 ### 5. Workflow
 
-Read branch naming from `project-guidelines.md`.
+Read branch naming from the project's `project-guidelines.md`.
 
 1. **Branch**: Create from main
    ```bash
    git checkout main && git checkout -b <branch-name>
    ```
-   Use the SonarCloud branch pattern from `project-guidelines.md` (e.g., `ci-camel-4-sonarcloud-<rule>`), or the custom `branch=<name>` if provided.
+   Use the SonarCloud branch pattern from the project's `project-guidelines.md` (e.g., `ci-camel-4-sonarcloud-<rule>`), or the custom `branch=<name>` if provided.
 
 2. **For each affected module**:
    - Apply fixes to all issues in that module
-   - Run formatting using the format command from `project-standards.md`
-   - Run tests using the test command from `project-standards.md`
-   - **If tests pass**: Commit with the sonarcloud commit format from `project-guidelines.md`
+   - Run formatting using the format command from the project's `project-standards.md`
+   - Run tests using the test command from the project's `project-standards.md`
+   - **If tests pass**: Commit with the sonarcloud commit format from the project's `project-guidelines.md`
    - **If tests fail**: Skip commit, continue to next module
 
 3. **Push**: After all modules processed
@@ -117,7 +127,7 @@ Read branch naming from `project-guidelines.md`.
 ### 6. General Guidelines
 
 - Tests MUST pass before committing
-- Do NOT reformat files manually - use the format command from `project-standards.md`
+- Do NOT reformat files manually - use the format command from the project's `project-standards.md`
 - Include auto-formatting changes in commit
 - GPG signing not required
 - For camel-core: do NOT parallelize Maven jobs; always run `mvn` in the module directory

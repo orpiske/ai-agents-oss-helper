@@ -21,11 +21,21 @@ Determine the current project by running:
 git remote get-url origin
 ```
 
-Match the output against the remote patterns in `project-info.md`.
-
-If the project's **Create-issue supported** field is "no" (e.g., Jira projects like camel-core), stop and tell the user: "Issue creation is not supported for this project. Please create the issue directly in the project's issue tracker."
+Match the output against the remote patterns to determine the project directory:
+- `wanaku-ai/wanaku` -> `wanaku`
+- `wanaku-ai/wanaku-capabilities-java-sdk` -> `wanaku-capabilities-java-sdk`
+- `wanaku-ai/camel-integration-capability` -> `camel-integration-capability`
+- `apache/camel` -> `camel-core`
+- `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
 If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+
+Once matched, read the project's rule files from the corresponding subdirectory:
+- `<project>/project-info.md` - Repository metadata, issue tracker, related repos
+- `<project>/project-standards.md` - Build tools, commands, code style
+- `<project>/project-guidelines.md` - Branching, commits, PR policies
+
+If the project's **Create-issue supported** field is "no" (e.g., Jira projects like camel-core), stop and tell the user: "Issue creation is not supported for this project. Please create the issue directly in the project's issue tracker."
 
 ### 2. Gather Issue Information
 

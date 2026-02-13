@@ -18,14 +18,19 @@ Determine the current project by running:
 git remote get-url origin
 ```
 
-Match the output against the remote patterns in `project-info.md`:
-- `wanaku-ai/wanaku` -> Wanaku
-- `wanaku-ai/wanaku-capabilities-java-sdk` -> Wanaku Capabilities Java SDK
-- `wanaku-ai/camel-integration-capability` -> Camel Integration Capability
-- `apache/camel` -> Apache Camel (camel-core)
-- `orpiske/ai-agents-oss-helper` -> AI Agents OSS Helper
+Match the output against the remote patterns to determine the project directory:
+- `wanaku-ai/wanaku` -> `wanaku`
+- `wanaku-ai/wanaku-capabilities-java-sdk` -> `wanaku-capabilities-java-sdk`
+- `wanaku-ai/camel-integration-capability` -> `camel-integration-capability`
+- `apache/camel` -> `camel-core`
+- `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
 If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
+
+Once matched, read the project's rule files from the corresponding subdirectory:
+- `<project>/project-info.md` - Repository metadata, issue tracker, related repos
+- `<project>/project-standards.md` - Build tools, commands, code style
+- `<project>/project-guidelines.md` - Branching, commits, PR policies
 
 ### 2. Understand the User's Experience
 
@@ -43,7 +48,7 @@ Based on responses, categorize as:
 
 ### 3. Search for Issues
 
-Read `project-guidelines.md` to determine the find-task source and labels/JQL for the current project.
+Read the project's `project-guidelines.md` to determine the find-task source and labels/JQL for the current project.
 
 #### GitHub Projects
 
@@ -133,4 +138,4 @@ You MUST NOT:
 
 ### 9. Quick Reference
 
-Read `project-guidelines.md` for the full label/JQL reference for the current project.
+Read the project's `project-guidelines.md` for the full label/JQL reference for the current project.
