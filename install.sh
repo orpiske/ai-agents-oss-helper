@@ -4,16 +4,17 @@
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/YOUR_ORG/ai-agents-oss-helper/main/install.sh | bash
-#   ./install.sh              # Install to both claude and bob
+#   ./install.sh              # Install to all agents (claude, bob, gemini)
 #   ./install.sh claude       # Install to claude only
 #   ./install.sh bob          # Install to bob only
+#   ./install.sh gemini       # Install to gemini only
 #
 
 set -euo pipefail
 
 # Configuration
 BASE_URL="${BASE_URL:-https://raw.githubusercontent.com/orpiske/ai-agents-oss-helper/main}"
-AGENTS=("claude" "bob")
+AGENTS=("claude" "bob" "gemini")
 
 # Command files to install (relative paths from repo root)
 COMMAND_FILES=(
@@ -151,6 +152,21 @@ fetch_file() {
     fi
 }
 
+# Convert a .md command file to Gemini CLI .toml format
+convert_md_to_toml() {
+    local src="$1"
+    local dest="$2"
+    local description
+    description="$(sed -n '3p' "$src")"
+    {
+        printf 'description = "%s"\n' "$description"
+        printf "prompt = '''\n"
+        printf 'Note: Project rule files are installed at ~/.gemini/rules/<project-directory>/ with files: project-info.md, project-standards.md, project-guidelines.md. Read these files to get project-specific configuration after detecting the project.\n\n'
+        cat "$src"
+        printf "\n'''\n"
+    } > "$dest"
+}
+
 # Install commands for a specific agent
 install_for_agent() {
     local agent="$1"
@@ -174,6 +190,10 @@ install_for_agent() {
     info "  Cleaning up old commands..."
     for old_file in "${OLD_COMMAND_FILES[@]}"; do
         rm -f "$commands_dir/$old_file"
+        # For gemini, also clean up .toml variants of old commands
+        if [[ "$agent" == "gemini" ]]; then
+            rm -f "$commands_dir/${old_file%.md}.toml"
+        fi
     done
 
     # Install new command files
@@ -181,13 +201,33 @@ install_for_agent() {
     for file in "${COMMAND_FILES[@]}"; do
         local filename
         filename="$(basename "$file")"
-        local dest="$commands_dir/$filename"
 
-        if fetch_file "$file" "$dest"; then
-            info "    Installed: $filename"
+        if [[ "$agent" == "gemini" ]]; then
+            # Gemini uses TOML commands: fetch .md to temp, convert to .toml
+            local toml_name="${filename%.md}.toml"
+            local dest="$commands_dir/$toml_name"
+            local tmp_md
+            tmp_md="$(mktemp)"
+
+            if fetch_file "$file" "$tmp_md"; then
+                convert_md_to_toml "$tmp_md" "$dest"
+                rm -f "$tmp_md"
+                # Remove any stale .md copy in gemini commands dir
+                rm -f "$commands_dir/$filename"
+                info "    Installed: $toml_name"
+            else
+                rm -f "$tmp_md"
+                error "    Failed to install: $toml_name"
+                return 1
+            fi
         else
-            error "    Failed to install: $filename"
-            return 1
+            local dest="$commands_dir/$filename"
+            if fetch_file "$file" "$dest"; then
+                info "    Installed: $filename"
+            else
+                error "    Failed to install: $filename"
+                return 1
+            fi
         fi
     done
 
