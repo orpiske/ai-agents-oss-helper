@@ -25,6 +25,7 @@ Match the output against the remote patterns to determine the project directory:
 - `apache/camel` -> `camel-core`
 - `apache/camel-quarkus` -> `camel-quarkus`
 - `apache/camel-spring-boot` -> `camel-spring-boot`
+- `apache/camel-kafka-connector` -> `camel-kafka-connector`
 - `orpiske/ai-agents-oss-helper` -> `ai-agents-oss-helper`
 
 If no match is found, stop and tell the user: "This project is not configured. Use `/oss-add-project` to register it."
